@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Lightbulb, Share2, Award } from "lucide-react";
+import { Share2, Award } from "lucide-react";
 import { Idea } from "./types.ts";
 import { cn } from "./lib/utils.ts";
 import IdeateTab from "./components/IdeateTab.tsx";

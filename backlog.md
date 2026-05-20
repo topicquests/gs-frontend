@@ -2,6 +2,8 @@
 
 ## Code Review Findings
 
+- [ ] [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
 ### vite.config.ts
 - [ ] Remove the triple-slash reference directive and use proper vite-env.d.ts augmentation instead (current workaround is temporary)
 - [ ] Consider using `loadEnv` if env handling needs to expand
@@ -11,22 +13,21 @@
 - [ ] Move this file or create separate type declaration files for better organization
 
 ### src/App.tsx
-- [ ] Remove unused imports: `Lightbulb`, `Share2`, `Award` from lucide-react (declared but not used)
+- [x] Remove unused import `Lightbulb` from lucide-react (Share2 and Award are used)
 - [ ] The admin notice area shows hardcoded "12 Online" - should come from state
 - [ ] TabButton component can be extracted to its own file
 - [ ] Consider extracting localStorage logic into a custom hook (useLocalStorage)
 
 ### src/types.ts
-- [ ] Remove unused `Link` interface (not used anywhere)
-- [ ] Remove unused `DiscourseData` interface (not used anywhere)
+- [x] Remove unused `Link` interface (not used anywhere)
+- [x] Remove unused `DiscourseData` interface (not used anywhere)
 
 ### src/lib/utils.ts
-- [ ] Consider renaming `cn` to something more descriptive or add JSDoc
+- [ ] Consider renaming `cn` to something more descriptive
 
 ### src/components/IdeateTab.tsx
-- [ ] Remove console.log statements from production code
 - [ ] Consider using custom hooks for AI interaction logic
-- [ ] Fix inconsistent indentation (mixed tabs/spaces in some sections)
+- [x] Fix inconsistent indentation (mixed tabs/spaces in some sections)
 
 ### src/components/ArgdownRenderer.tsx
 - [ ] Add proper CSS for argdown styling (prose classes may not cover all cases)
@@ -34,18 +35,13 @@
 - [ ] Add proper error boundary around renderer
 
 ### src/services/llmService.ts
-- [ ] Remove all console.log statements (should use proper logging or be environment-controlled)
-- [ ] The API key "ollama" is hardcoded - should be configurable
-- [ ] The system prompt strings have trailing spaces that should be trimmed
-- [ ] Add proper error type handling instead of `any`
-- [ ] Remove unused variables: `openaiHost`, `openaiModel`, `openaiModel`
+- [x] The API key "ollama" is now configurable via VITE_OPENAI_API_KEY
+- [x] The system prompt strings have trailing spaces that should be trimmed
+- [x] Add proper error type handling instead of `any`
+- [x] Remove unused variables: `openaiHost`, `open600Model`
 - [ ] Consider moving environment variable logging to a debug mode
 - [ ] The prompts are too long - should be in separate prompt templates or a prompts file
 - [ ] Add request/response logging with proper formatting
-
-### backlog.md Cleanup
-- [ ] Remove duplicate entries in Phase 4 (items 1-4 are duplicates)
-- [ ] Clean up duplicate feature entries: "real-time collaboration", "user authentication", "importing/exporting"
 
 ## Phase 1: Stability & Foundation
 - [x] Replaced D3 DiscourseGraph with Argdown Visualization
@@ -78,10 +74,3 @@
 - [ ] Implement importing/exporting discourse graphs
 - [ ] Implement real-time collaboration features
 - [ ] Add user authentication for persistence
-
-## Recently Completed
-- [x] **Code Review & Cleanup** - Fixed all type checking issues, removed unused dependencies
-- [x] **localStorage Implementation** - Ideas and graphs now persist between sessions
-- [x] **Vite Configuration** - Fixed TypeScript compatibility issues
-- [x] **Dependency Optimization** - Removed unused d3 library, reducing bundle size
-- [x] **Type Checking** - All TypeScript compilation passes successfully

@@ -37,7 +37,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
       const result = await ideateReasoning(question, inputText);
       setReasoning(result);
       console.log('Ideate successful');
-      
+
       const argdown = await generateArgdown(question, inputText, result);
       setArgdownText(argdown);
       console.log('Argdown generation successful');
@@ -78,7 +78,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Socratic Reasoning Engine</h3>
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
           </div>
-          
+
           <div className="p-6 overflow-y-auto relative">
             <AnimatePresence mode="wait">
               {isLoading ? (
@@ -107,7 +107,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                     <p className="text-sm font-bold">System Error</p>
                     <p className="text-xs opacity-80 max-w-xs">{error}</p>
                   </div>
-                  <button 
+                  <button
                     onClick={handleIdeate}
                     className="mt-2 px-4 py-2 bg-red-500 text-white text-xs font-bold rounded-lg hover:bg-red-600 transition-colors"
                   >
@@ -127,7 +127,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                         return (
                           <details key={i} className="group mb-4 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50">
                             <summary className="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-100 transition-colors list-none">
-                              <div className="w-6 h-6 rounded bg-indigo-100 shrink-0 flex items-center justify-center text-[10px] font-bold text-indigo-600 border border-indigo-200 group-open:rotate-90 transition-transform">
+                              <div className="w-6 h-6 rounded bg-indigo-100 shrink-6 flex items-center justify-center text-[10px] font-bold text-indigo-600 border border-indigo-200 group-open:rotate-90 transition-transform">
                                 <ChevronRight size={12} />
                               </div>
                               <p className="text-indigo-900 font-medium text-sm truncate">Socratic Inquiry {i + 1}</p>
@@ -230,5 +230,3 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
     </div>
   );
 }
-
-export { IdeateTab };

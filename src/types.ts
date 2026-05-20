@@ -12,16 +12,6 @@ export interface Node {
   };
 }
 
-export interface Link {
-  source: string;
-  target: string;
-}
-
-export interface DiscourseData {
-  nodes: Node[];
-  links: Link[];
-}
-
 export interface Idea {
   id: string;
   text: string;
