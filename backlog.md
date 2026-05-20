@@ -1,47 +1,34 @@
 # Project Backlog
 
-## Code Review Findings
+## Code Review Findings by Phase
 
-- [ ] [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+### Phase 1: Stability & Foundation (High Priority)
+- [x] Remove unused `Link` interface from `types.ts`
+- [x] Remove unused `DiscourseData` interface from `types.ts`
+- [x] The API key "ollama" is now configurable via `VITE_OPENAI_API_KEY`
+- [x] Add proper error type handling instead of `any` in `llmService.ts`
+- [x] Remove unused variables: `openaiHost`, `openaiModel` in `llmService.ts`
+- [x] Remove unused import `Lightbulb` from `App.tsx`
 
-### vite.config.ts
-- [ ] Remove the triple-slash reference directive and use proper vite-env.d.ts augmentation instead (current workaround is temporary)
-- [ ] Consider using `loadEnv` if env handling needs to expand
-
-### src/vite-env.d.ts
-- [ ] Add proper type imports from `@types/react` for `UserConfig` and `UserConfigFn` types
-- [ ] Move this file or create separate type declaration files for better organization
-
-### src/App.tsx
-- [x] Remove unused import `Lightbulb` from lucide-react (Share2 and Award are used)
+### Phase 2: Feature Expansion (Medium Priority)
 - [ ] The admin notice area shows hardcoded "12 Online" - should come from state
 - [ ] TabButton component can be extracted to its own file
 - [ ] Consider extracting localStorage logic into a custom hook (useLocalStorage)
-
-### src/types.ts
-- [x] Remove unused `Link` interface (not used anywhere)
-- [x] Remove unused `DiscourseData` interface (not used anywhere)
-
-### src/lib/utils.ts
-- [ ] Consider renaming `cn` to something more descriptive
-
-### src/components/IdeateTab.tsx
-- [ ] Consider using custom hooks for AI interaction logic
-- [x] Fix inconsistent indentation (mixed tabs/spaces in some sections)
-
-### src/components/ArgdownRenderer.tsx
-- [ ] Add proper CSS for argdown styling (prose classes may not cover all cases)
-- [ ] The `argdown` import might need to be dynamically imported for bundle optimization
-- [ ] Add proper error boundary around renderer
-
-### src/services/llmService.ts
-- [x] The API key "ollama" is now configurable via VITE_OPENAI_API_KEY
-- [x] The system prompt strings have trailing spaces that should be trimmed
-- [x] Add proper error type handling instead of `any`
-- [x] Remove unused variables: `openaiHost`, `open600Model`
-- [ ] Consider moving environment variable logging to a debug mode
+- [ ] Consider using custom hooks for AI interaction logic in `IdeateTab.tsx`
 - [ ] The prompts are too long - should be in separate prompt templates or a prompts file
-- [ ] Add request/response logging with proper formatting
+- [ ] Add request/response logging with proper formatting in `llmService.ts`
+
+### Phase 3: Polish & Quality (Low Priority)
+- [x] Fix inconsistent indentation in `IdeateTab.tsx`
+- [x] Fix trailing spaces in system prompt strings
+- [ ] Consider renaming `cn` to something more descriptive in `utils.ts`
+- [ ] Consider using `loadEnv` if env handling needs to expand
+- [ ] Add proper type imports from `@types/react` for `UserConfig` and `UserConfigFn` types
+- [ ] Move vite-env.d.ts or create separate type declaration files for better organization
+- [ ] Remove the triple-slash reference directive and use proper vite-env.d.ts augmentation
+- [ ] Add proper CSS for argdown styling in `ArgdownRenderer.tsx`
+- [ ] The `argdown` import might need to be dynamically imported for bundle optimization
+- [ ] Add proper error boundary around `ArgdownRenderer.tsx` renderer
 
 ## Phase 1: Stability & Foundation
 - [x] Replaced D3 DiscourseGraph with Argdown Visualization
@@ -74,3 +61,11 @@
 - [ ] Implement importing/exporting discourse graphs
 - [ ] Implement real-time collaboration features
 - [ ] Add user authentication for persistence
+
+## Phase 5: Future Considerations
+- [ ] Update `src/services/llmService.ts` to use a web-server to proxy requests to LLM provider
+  - Remove direct OpenAI import
+  - Import `socket.io-client`
+  - Connect to server on mount
+  - Emit `llm_request` with the prompt, await `llm_response`
+- [ ] Update frontend to use new `llmService` and wait for completion
