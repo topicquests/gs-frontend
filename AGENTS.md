@@ -1,17 +1,17 @@
 # Frontend Development Guidelines
 
-## Development Principles
+## Development Guidelines
 
 - Use `backlog.md` to track project backlog, code review findings, and features in progress. This is the main source of truth for project status and next steps.
 - Use `README.md` for high-level documentation, architecture overview, and user-facing information about the project.
-
-
-## Dev Environment
-
 - Develop the frontend application using TypeScript and React using Vite. Use one of the skills as appropriate: `vercel-react-best-practices` or `vite`.
+- Include comments in the code at a high level to explain the purpose of components, functions, and complex logic.
+- Include print statements (e.g. `console.log`) to help trace execution flow and debug issues.
 - See `argdown-syntax.md` for Argdown syntax reference.
 - Never run blocking server commands (`npm start`, `npm run dev` etc.) but instead provide commands for user to run separately.
+- We are not writing this code for production use, so focus on functionality and clarity rather than performance optimizations. Continue to follow best practices while creating a working prototype.
 
 ## Testing
 
 - Run `npm run lint` often to ensure code quality.
+- Always add or update unit tests for any new features or fixes.
