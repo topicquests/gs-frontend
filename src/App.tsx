@@ -2,32 +2,16 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Share2, Award } from "lucide-react";
 import { Idea } from "./types.ts";
-import { cn } from "./lib/utils.ts";
+import { clsxMerge } from "./lib/utils.ts";
 import IdeateTab from "./components/IdeateTab.tsx";
+import TabButton from "./components/TabButton.tsx";
+import useLocalStorage from "./hooks/useLocalStorage.ts";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<"ideate" | "graph" | "contributions">("ideate");
   const [question] = useState("Are collaborative documents more effective than sequential individual editing?");
-  const [ideas, setIdeas] = useState<Idea[]>([]);
-  
-  // Load ideas from localStorage on component mount
-  useEffect(() => {
-    const savedIdeas = localStorage.getItem('sensemaking-ideas');
-    if (savedIdeas) {
-      try {
-        setIdeas(JSON.parse(savedIdeas));
-      } catch (e) {
-        console.error('Failed to parse saved ideas:', e);
-      }
-    }
-  }, []);
-  
-  // Save ideas to localStorage whenever they change
-  useEffect(() => {
-    if (ideas.length > 0) {
-      localStorage.setItem('sensemaking-ideas', JSON.stringify(ideas));
-    }
-  }, [ideas]);
+  const [ideas, setIdeas] = useLocalStorage<Idea[]>("sensemaking-ideas", []);
+  const [onlineUsers] = useState(12);
   
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-indigo-100 flex flex-col">
@@ -66,7 +50,7 @@ export default function App() {
               <div className="w-8 h-8 rounded-full border-2 border-white bg-green-400"></div>
               <div className="w-8 h-8 rounded-full border-2 border-white bg-amber-400"></div>
             </div>
-            <span className="text-xs text-slate-400 font-medium">12 Online</span>
+            <span className="text-xs text-slate-400 font-medium">{onlineUsers} Online</span>
           </div>
         </nav>
 
@@ -112,20 +96,6 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
-}
-
-function TabButton({ active, onClick, label }: { active: boolean; onClick: () => void; label: string }) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "px-2 h-full transition-all border-b-2 font-medium relative flex items-center",
-        active ? "border-indigo-600 text-indigo-600 font-semibold" : "border-transparent text-slate-500 hover:text-slate-800"
-      )}
-    >
-      {label}
-    </button>
   );
 }
 

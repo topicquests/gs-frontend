@@ -18,3 +18,41 @@
     @apply bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden;
   }
 }
+
+@layer components {
+  .argdown-container {
+    @apply text-slate-700;
+  }
+
+  .argdown-container h1,
+  .argdown-container h2,
+  .argdown-container h3,
+  .argdown-container h4 {
+    @apply text-slate-800 font-semibold mb-2;
+  }
+
+  .argdown-container p {
+    @apply mb-3 leading-relaxed;
+  }
+
+  .argdown-container ul,
+  .argdown-container ol {
+    @apply mb-4 pl-6;
+  }
+
+  .argdown-container li {
+    @apply mb-2;
+  }
+
+  .argdown-container blockquote {
+    @apply border-l-4 border-indigo-200 pl-4 italic text-slate-600 mb-4;
+  }
+
+  .argdown-container code {
+    @apply bg-slate-100 px-1.5 py-0.5 rounded text-slate-800 font-mono text-sm;
+  }
+
+  .argdown-container pre {
+    @apply bg-slate-100 p-3 rounded-lg overflow-x-auto text-sm;
+  }
+}

@@ -11,22 +11,22 @@
 - [x] Remove unused import `Lightbulb` from `App.tsx`
 
 ### Phase 2: Feature Expansion (Medium Priority)
-- [ ] The admin notice area shows hardcoded "12 Online" - should come from state
-- [ ] TabButton component can be extracted to its own file
-- [ ] Consider extracting localStorage logic into a custom hook (useLocalStorage)
-- [ ] Consider using custom hooks for AI interaction logic in `IdeateTab.tsx`
-- [ ] The prompts are too long - should be in separate prompt templates or a prompts file
-- [ ] Add request/response logging with proper formatting in `llmService.ts`
+- [x] The admin notice area shows hardcoded "12 Online" - should come from state
+- [x] TabButton component can be extracted to its own file
+- [x] Consider extracting localStorage logic into a custom hook (useLocalStorage)
+- [x] Consider using custom hooks for AI interaction logic in `IdeateTab.tsx`
+- [x] The prompts are too long - should be in separate prompt templates or a prompts file
+- [x] Add request/response logging with proper formatting in `llmService.ts`
 
 ### Phase 3: Polish & Quality (Low Priority)
 - [x] Fix inconsistent indentation in `IdeateTab.tsx`
 - [x] Fix trailing spaces in system prompt strings
-- [ ] Consider renaming `cn` to something more descriptive in `utils.ts`
+- [x] Consider renaming `cn` to something more descriptive in `utils.ts`
 - [ ] Consider using `loadEnv` if env handling needs to expand
 - [ ] Add proper type imports from `@types/react` for `UserConfig` and `UserConfigFn` types
 - [ ] Move vite-env.d.ts or create separate type declaration files for better organization
 - [ ] Remove the triple-slash reference directive and use proper vite-env.d.ts augmentation
-- [ ] Add proper CSS for argdown styling in `ArgdownRenderer.tsx`
+- [x] Add proper CSS for argdown styling in `ArgdownRenderer.tsx`
 - [ ] The `argdown` import might need to be dynamically imported for bundle optimization
 - [ ] Add proper error boundary around `ArgdownRenderer.tsx` renderer
 
@@ -36,7 +36,7 @@
 - [x] Removed unused d3 dependency
 - [x] Implemented localStorage persistence
 - [x] All TypeScript compilation passes successfully
-- [ ] Add Argdown syntax validation and sanitization layer
+- [x] Add Argdown syntax validation and sanitization layer
 
 ## Phase 2: Feature Expansion
 - [x] Show loading skeleton when graph data arrives (Ref: `rendering-usetransition-loading`)

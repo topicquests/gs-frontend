@@ -1,11 +1,7 @@
 import OpenAI from "openai";
-
-console.log('LLM Service initializing...');
+import { IDEATE_REASONING_PROMPT, GENERATE_ARGWDOWN_PROMPT } from "../prompts.js";
 
 const model = import.meta.env.VITE_OPENAI_MODEL || "gpt-oss:20b";
-
-console.log('OPENAI_HOST:', import.meta.env.VITE_OPENAI_HOST || 'Not set');
-console.log('Using model:', import.meta.env.VITE_OPENAI_MODEL);
 
 const client = new OpenAI({
   baseURL: import.meta.env.VITE_OPENAI_HOST,
@@ -13,71 +9,58 @@ const client = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
+function logRequest(endpoint: string, messages: Array<{ role: string; content: string }>) {
+  console.log(`[LLM Request] ${endpoint}`, JSON.stringify({
+    model,
+    messages: messages.map(m => ({ role: m.role, content: m.content.substring(0, 100) + "..."}))
+  }, null, 2));
+}
+
+function logResponse(endpoint: string, content: string) {
+  console.log(`[LLM Response] ${endpoint}`, JSON.stringify({
+    content: content.substring(0, 200) + (content.length > 200 ? "..." : ""),
+    length: content.length
+  }, null, 2));
+}
+
 export async function ideateReasoning(question: string, userIdea: string): Promise<string> {
-  console.log('=== Socratic Reasoning Request ===');
-  console.log('Input question:', question.substring(0, 80) + '...');
-  console.log('Input user idea:', userIdea.substring(0, 80) + '...');
-  console.log('Using model:', model);
-  console.log('===============================');
-  const prompt = `
-Question: ${question}
-User Idea: ${userIdea}
-
-Using Socratic reasoning, analyze this idea in the context of the question.
-Provide 3 insightful, challenging, and constructive questions or points that stimulate further thought.
-Format your response as a list of bullet points starting with "- ".
-At the end, include 1 or 2 citations from relevant hypothetical or real research in the format [1] Title: URL.
-`;
-
-  console.log('Starting Socratic reasoning generation for question:', question.substring(0, 80) + '...');
+  console.log("[LLM] Starting Socratic reasoning generation");
+  const prompt = IDEATE_REASONING_PROMPT(question, userIdea);
 
   try {
+    logRequest("ideateReasoning", [{ role: "user", content: prompt }]);
     const response = await client.chat.completions.create({
       model,
       messages: [{ role: "user", content: prompt }],
     });
     const content = response.choices[0]?.message?.content ?? "";
-    console.log('Argdown generation completed successfully');
-    console.log('Generated graph preview:', content.substring(0, 100) + '...');
+    logResponse("ideateReasoning", content);
+    console.log("[LLM] Socratic reasoning completed successfully");
     return content;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error("LLM Error:", error);
-    console.error('Detailed error:', message);
+    console.error("[LLM Error] ideateReasoning:", error);
     throw new Error(`Failed to generate discourse graph: ${message}`);
   }
 }
 
 export async function generateArgdown(question: string, userIdea: string, reasoning: string): Promise<string> {
-  console.log('=== Argdown Generation Request ===');
-  console.log('Input question:', question.substring(0, 80) + '...');
-  console.log('Input user idea:', userIdea.substring(0, 80) + '...');
-  console.log('Input reasoning:', reasoning.substring(0, 80) + '...');
-  console.log('===============================');
-
-  const prompt = `
-Question: ${question}
-User Idea: ${userIdea}
-Socratic Reasoning: ${reasoning}
-
-Convert the above into an argdown structure suitable for visualizing a discourse graph.
-Include nodes for the original question, the user's idea, and each point of reasoning as separate entities.
-Use proper argdown syntax with node definitions and connections.
-`;
+  console.log("[LLM] Starting Argdown generation");
+  const prompt = GENERATE_ARGWDOWN_PROMPT(question, userIdea, reasoning);
 
   try {
+    logRequest("generateArgdown", [{ role: "user", content: prompt }]);
     const response = await client.chat.completions.create({
       model,
       messages: [{ role: "user", content: prompt }],
     });
     const content = response.choices[0]?.message?.content ?? "";
-    console.log('Argdown generation completed successfully');
-    console.log('Generated argdown preview:', content.substring(0, 100) + '...');
+    logResponse("generateArgdown", content);
+    console.log("[LLM] Argdown generation completed successfully");
     return content;
-  } catch (error) {
+  } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error("LLM Error:", error);
-    console.error('Detailed error:', message);
+    console.error("[LLM Error] generateArgdown:", error);
     throw new Error(`Failed to generate argdown: ${message}`);
   }
 }

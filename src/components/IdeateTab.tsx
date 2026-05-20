@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Send, Zap, Plus, Info, Share2, ChevronRight } from "lucide-react";
-import { cn } from "../lib/utils.ts";
+import { clsxMerge } from "../lib/utils.ts";
 import ArgdownRenderer from "./ArgdownRenderer.tsx";
-import { ideateReasoning, generateArgdown } from "../services/llmService.ts";
+import { useAI } from "../hooks/useAI.ts";
 import { Idea } from "../types.ts";
 
 interface Props {
@@ -14,65 +14,24 @@ interface Props {
 
 export default function IdeateTab({ question, ideas, setIdeas }: Props) {
   const [inputText, setInputText] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [reasoning, setReasoning] = useState("");
-  const [argdownText, setArgdownText] = useState("");
+  const { reasoning, argdownText, isLoading, error, ideate, submitIdea } = useAI();
 
-  // Log when component mounts
   useEffect(() => {
-    console.log('IdeateTab component initialized');
+    console.log("IdeateTab component initialized");
   }, []);
 
   const handleIdeate = async () => {
-    if (!inputText.trim()) return;
-
-    // Log user interaction
-    console.log('User clicked Ideate button');
-    console.log('Input text:', inputText.substring(0, 100) + '...');
-
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await ideateReasoning(question, inputText);
-      setReasoning(result);
-      console.log('Ideate successful');
-
-      const argdown = await generateArgdown(question, inputText, result);
-      setArgdownText(argdown);
-      console.log('Argdown generation successful');
-    } catch (e: any) {
-      setError(e.message || "An unexpected error occurred");
-      console.error('Ideate failed:', e.message);
-    } finally {
-      setIsLoading(false);
-    }
+    await ideate(question, inputText);
   };
 
   const handleSubmit = () => {
-    if (!inputText.trim()) return;
-
-    // Log user interaction
-    console.log('User clicked Submit button');
-    console.log('Submitting idea:', inputText.substring(0, 100) + '...');
-
-    const newIdea: Idea = {
-      id: crypto.randomUUID(),
-      text: inputText,
-      reasoning,
-      timestamp: Date.now()
-    };
-    setIdeas([newIdea, ...ideas]);
+    submitIdea(inputText, reasoning, ideas, setIdeas);
     setInputText("");
-    setReasoning("");
-    console.log('Idea submitted successfully, total ideas:', ideas.length + 1);
   };
 
   return (
     <div className="flex gap-6 h-full min-h-0 overflow-hidden">
-      {/* Left Column (60%) */}
       <div className="w-3/5 flex flex-col h-full gap-6">
-        {/* Socratic Reasoning Area */}
         <div className="flex-grow bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col overflow-hidden">
           <div className="px-5 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Socratic Reasoning Engine</h3>
@@ -122,10 +81,10 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                   className="space-y-6"
                 >
                   <div className="font-sans text-sm leading-relaxed text-slate-700">
-                    {reasoning.split('\n').map((line, i) => {
-                      if (line.startsWith('-')) {
+                    {reasoning.split("\n").map((line, i) => {
+                      if (line.startsWith("-")) {
                         return (
-                          <details key={i} className="group mb-4 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50">
+                          <details key={i} className="group mb-6 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50">
                             <summary className="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-100 transition-colors list-none">
                               <div className="w-6 h-6 rounded bg-indigo-100 shrink-6 flex items-center justify-center text-[10px] font-bold text-indigo-600 border border-indigo-200 group-open:rotate-90 transition-transform">
                                 <ChevronRight size={12} />
@@ -133,7 +92,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                               <p className="text-indigo-900 font-medium text-sm truncate">Socratic Inquiry {i + 1}</p>
                             </summary>
                             <div className="p-3 pt-0 pb-3 px-3 pl-9">
-                              <p className="text-slate-600 italic text-base">"{line.replace('- ', '')}"</p>
+                              <p className="text-slate-600 italic text-base">"{line.replace("- ", "")}"</p>
                             </div>
                           </details>
                         );
@@ -161,7 +120,6 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
           </div>
         </div>
 
-        {/* User Input Box */}
         <div className="shrink-0 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <textarea
             className="w-full h-24 p-4 border border-slate-200 rounded-xl bg-slate-50 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all resize-none"
@@ -173,7 +131,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
             <button
               onClick={handleIdeate}
               disabled={isLoading}
-              className={cn(
+              className={clsxMerge(
                 "px-6 py-2.5 bg-white border border-indigo-600 text-indigo-600 text-sm font-bold rounded-xl hover:bg-indigo-50 transition-colors shadow-sm disabled:opacity-50 flex items-center gap-2"
               )}
             >
@@ -182,7 +140,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
             </button>
             <button
               onClick={handleSubmit}
-              className={cn(
+              className={clsxMerge(
                 "px-8 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 transition-colors shadow-lg flex items-center gap-2"
               )}
             >
@@ -193,7 +151,6 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
         </div>
       </div>
 
-      {/* Right Column: Personal Graph (40%) */}
       <div className="w-2/5 flex flex-col h-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden min-h-0">
         <div className="px-5 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Personal Discourse Graph</h3>
@@ -213,7 +170,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                 <div className="flex-grow h-4 bg-slate-200 rounded"></div>
               </div>
               <div className="flex gap-4 items-center mt-4">
-                <div className="w-12 h-12 bg-slate-200 rounded-full"></div>
+                <div className="w-12 h-ly-12 bg-slate-200 rounded-full"></div>
                 <div className="flex-grow h-4 bg-slate-200 rounded"></div>
               </div>
             </div>
