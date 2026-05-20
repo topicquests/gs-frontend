@@ -1,7 +1,7 @@
 export interface Node {
   id: string;
   label: string;
-  type: "question" | "claim" | "argument" | "evidence" | "rebuttal";
+  type: 'question' | 'claim' | 'argument' | 'evidence' | 'rebuttal';
   x?: number;
   y?: number;
   collapsed?: boolean;

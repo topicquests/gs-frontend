@@ -1,10 +1,9 @@
-declare module "vite" {
-  interface ImportMetaEnv {
-    OPENAI_HOST: string;
-    OPENAI_MODEL: string;
-  }
-  export function defineConfig<T extends UserConfig>(config: T): T;
-  export type { UserConfig, UserConfigFn };
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  VITE_OPENAI_HOST?: string;
+  VITE_OPENAI_MODEL?: string;
+  VITE_OPENAI_API_KEY?: string;
 }
 
 interface ImportMeta {

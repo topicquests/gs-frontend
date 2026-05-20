@@ -8,7 +8,11 @@ Format your response as a list of bullet points starting with "- ".
 At the end, include 1 or 2 citations from relevant hypothetical or real research in the format [1] Title: URL.
 `;
 
-export const GENERATE_ARGWDOWN_PROMPT = (question: string, userIdea: string, reasoning: string): string => `
+export const GENERATE_ARGWDOWN_PROMPT = (
+  question: string,
+  userIdea: string,
+  reasoning: string
+): string => `
 Question: ${question}
 User Idea: ${userIdea}
 Socratic Reasoning: ${reasoning}

@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Share2, Award } from "lucide-react";
-import { Idea } from "./types.ts";
-import { clsxMerge } from "./lib/utils.ts";
-import IdeateTab from "./components/IdeateTab.tsx";
-import TabButton from "./components/TabButton.tsx";
-import useLocalStorage from "./hooks/useLocalStorage.ts";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Share2, Award } from 'lucide-react';
+import { Idea } from './types.ts';
+import IdeateTab from './components/IdeateTab.tsx';
+import TabButton from './components/TabButton.tsx';
+import useLocalStorage from './hooks/useLocalStorage.ts';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<"ideate" | "graph" | "contributions">("ideate");
-  const [question] = useState("Are collaborative documents more effective than sequential individual editing?");
-  const [ideas, setIdeas] = useLocalStorage<Idea[]>("sensemaking-ideas", []);
+  const [activeTab, setActiveTab] = useState<'ideate' | 'graph' | 'contributions'>('ideate');
+  const [question] = useState(
+    'Are collaborative documents more effective than sequential individual editing?'
+  );
+  const [ideas, setIdeas] = useLocalStorage<Idea[]>('sensemaking-ideas', []);
   const [onlineUsers] = useState(12);
-  
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-indigo-100 flex flex-col">
       {/* Admin Notice Area */}
       <header className="bg-indigo-700 text-white py-2 px-6 flex justify-between items-center shrink-0 shadow-md">
         <div className="flex items-center space-x-3">
-          <span className="bg-indigo-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded">Admin Post</span>
+          <span className="bg-indigo-400 text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+            Admin Post
+          </span>
           <p className="text-sm font-medium">"{question}"</p>
         </div>
         <div className="text-xs opacity-80 italic">Active Discussion</div>
@@ -28,19 +31,19 @@ export default function App() {
         {/* Navigation Tabs */}
         <nav className="bg-white border border-slate-200 rounded-2xl shadow-sm px-6 flex items-center h-14 shrink-0 mb-6">
           <div className="flex space-x-8 h-full">
-            <TabButton 
-              active={activeTab === "ideate"} 
-              onClick={() => setActiveTab("ideate")}
+            <TabButton
+              active={activeTab === 'ideate'}
+              onClick={() => setActiveTab('ideate')}
               label="Ideate"
             />
-            <TabButton 
-              active={activeTab === "graph"} 
-              onClick={() => setActiveTab("graph")}
+            <TabButton
+              active={activeTab === 'graph'}
+              onClick={() => setActiveTab('graph')}
               label="Collaborative Graph"
             />
-            <TabButton 
-              active={activeTab === "contributions"} 
-              onClick={() => setActiveTab("contributions")}
+            <TabButton
+              active={activeTab === 'contributions'}
+              onClick={() => setActiveTab('contributions')}
               label="Contributions"
             />
           </div>
@@ -57,7 +60,7 @@ export default function App() {
         {/* Tab Content */}
         <div className="flex-1 overflow-hidden min-h-0">
           <AnimatePresence mode="wait">
-            {activeTab === "ideate" && (
+            {activeTab === 'ideate' && (
               <motion.div
                 key="ideate"
                 initial={{ opacity: 0, y: 10 }}
@@ -68,7 +71,7 @@ export default function App() {
                 <IdeateTab question={question} ideas={ideas} setIdeas={setIdeas} />
               </motion.div>
             )}
-            {activeTab === "graph" && (
+            {activeTab === 'graph' && (
               <motion.div
                 key="graph"
                 initial={{ opacity: 0 }}
@@ -80,7 +83,7 @@ export default function App() {
                 <p className="text-xl italic font-serif">Collaborative Graph view coming soon...</p>
               </motion.div>
             )}
-            {activeTab === "contributions" && (
+            {activeTab === 'contributions' && (
               <motion.div
                 key="contributions"
                 initial={{ opacity: 0 }}
@@ -98,4 +101,3 @@ export default function App() {
     </div>
   );
 }
-

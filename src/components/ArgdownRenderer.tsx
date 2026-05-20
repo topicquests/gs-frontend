@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
-import { argdown } from "@argdown/core";
+import React, { useMemo } from 'react';
+import { argdown } from '@argdown/core';
 
 interface Props {
   text: string;
 }
 
 function sanitizeHtml(html: string): string {
-  return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+  return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 }
 
 function validateArgdownSyntax(text: string): { valid: boolean; errors: string[] } {
@@ -27,7 +27,7 @@ function validateArgdownSyntax(text: string): { valid: boolean; errors: string[]
   }
 
   if (bracketCount !== 0) {
-    errors.push("Unmatched brackets in argdown text");
+    errors.push('Unmatched brackets in argdown text');
   }
 
   return { valid: errors.length === 0, errors };
@@ -36,28 +36,28 @@ function validateArgdownSyntax(text: string): { valid: boolean; errors: string[]
 export default function ArgdownRenderer({ text }: Props) {
   const html = useMemo(() => {
     try {
-      if (!text) return "";
+      if (!text) return '';
 
       const validation = validateArgdownSyntax(text);
       if (!validation.valid) {
-        console.warn("[Argdown] Syntax validation warnings:", validation.errors);
+        console.warn('[Argdown] Syntax validation warnings:', validation.errors);
       }
 
       const config = {
         input: text,
-        process: "export-html",
+        process: 'export-html',
         html: {
           headless: true,
-        }
+        },
       };
 
       const response = argdown.run(config);
 
-      const sanitizedHtml = sanitizeHtml(response.html || "");
-      console.log("[Argdown] Render completed successfully");
+      const sanitizedHtml = sanitizeHtml(response.html || '');
+      console.log('[Argdown] Render completed successfully');
       return sanitizedHtml;
     } catch (e) {
-      console.error("[Argdown] Render error:", e);
+      console.error('[Argdown] Render error:', e);
       return `<p class="text-red-500">Error rendering discourse graph</p>`;
     }
   }, [text]);
