@@ -2,14 +2,16 @@
  * IdeateTab component.
  * Main interface for Socratic reasoning - accepts user input, displays generated reasoning,
  * and shows the discourse graph visualization.
+ * Uses dynamic import for ArgdownRenderer to optimize bundle size.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Zap, Plus, Info, ChevronRight } from 'lucide-react';
 import { clsxMerge } from '../lib/utils.ts';
-import ArgdownRenderer from './ArgdownRenderer.tsx';
 import { useAI } from '../hooks/useAI.ts';
 import { Idea } from '../types.ts';
+
+const ArgdownRenderer = lazy(() => import('./ArgdownRenderer.tsx'));
 
 interface Props {
   question: string;
@@ -199,7 +201,9 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
               </div>
             </div>
           ) : (
-            <ArgdownRenderer text={argdownText} />
+            <Suspense fallback={<div className="h-full animate-pulse bg-slate-100" />}>
+              <ArgdownRenderer text={argdownText} />
+            </Suspense>
           )}
         </div>
         <div className="p-4 border-t border-slate-100 bg-white shrink-0">

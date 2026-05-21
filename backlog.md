@@ -13,6 +13,11 @@
 - [x] Implemented localStorage persistence
 - [x] All TypeScript compilation passes successfully
 - [x] Add Argdown syntax validation and sanitization layer
+- [x] Use dynamic import() to code-split the application (IdeateTab lazy-loaded)
+- [x] Added manualChunks config in vite.config.ts for vendor optimization
+- [x] Configured ESLint with flat config
+- [x] Added unit tests for all components and services
+- [x] Added comments to all TypeScript files
 
 ### Phase 2: Feature Expansion (Medium Priority)
 - [x] The admin notice area shows hardcoded "12 Online" - should come from state

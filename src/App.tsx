@@ -2,14 +2,16 @@
  * Main application component.
  * Renders the overall layout with navigation tabs and tab content.
  * Uses localStorage to persist ideas across sessions.
+ * Uses lazy loading for tab content components to reduce initial bundle size.
  */
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Share2, Award } from 'lucide-react';
 import { Idea } from './types.ts';
-import IdeateTab from './components/IdeateTab.tsx';
 import TabButton from './components/TabButton.tsx';
 import useLocalStorage from './hooks/useLocalStorage.ts';
+
+const IdeateTab = lazy(() => import('./components/IdeateTab.tsx'));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'ideate' | 'graph' | 'contributions'>('ideate');
@@ -66,15 +68,17 @@ export default function App() {
         <div className="flex-1 overflow-hidden min-h-0">
           <AnimatePresence mode="wait">
             {activeTab === 'ideate' && (
-              <motion.div
-                key="ideate"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="h-full"
-              >
-                <IdeateTab question={question} ideas={ideas} setIdeas={setIdeas} />
-              </motion.div>
+              <Suspense fallback={<div className="h-full animate-pulse bg-slate-100 rounded" />}>
+                <motion.div
+                  key="ideate"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="h-full"
+                >
+                  <IdeateTab question={question} ideas={ideas} setIdeas={setIdeas} />
+                </motion.div>
+              </Suspense>
             )}
             {activeTab === 'graph' && (
               <motion.div
