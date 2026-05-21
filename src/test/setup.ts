@@ -1,29 +1,28 @@
+/**
+ * Test setup for testing-library.
+ * Configures Jest DOM matchers and sets up test environment.
+ */
 import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'util';
+import { vi } from 'vitest';
 
-Object.assign(global, {
-  TextDecoder,
-  TextEncoder,
-});
-
-const localStorageMock: Record<string, string> = {};
-const localStorageApi = {
-  getItem: (key: string) => localStorageMock[key] || null,
-  setItem: (key: string, value: string) => {
-    localStorageMock[key] = value;
-  },
-  inItem: (key: string) => {
-    delete localStorageMock[key];
-  },
-  clear: () => {
-    Object.keys(localStorageMock).forEach((key) => delete localStorageMock[key]);
-  },
-  get key() {
-    return (index: number) => Object.keys(localStorageMock)[index] || null;
-  },
+const localStorageMock = {
+  store: {} as Record<string, string>,
+  getItem: vi.fn((key) => localStorageMock.store[key] ?? null),
+  setItem: vi.fn((key, value) => {
+    localStorageMock.store[key] = value;
+  }),
+  removeItem: vi.fn((key) => {
+    delete localStorageMock.store[key];
+  }),
+  clear: vi.fn(() => {
+    localStorageMock.store = {};
+  }),
+  key: vi.fn(),
   get length() {
-    return Object.keys(localStorageMock).length;
+    return Object.keys(localStorageMock.store).length;
   },
 };
 
-Object.defineProperty(window, 'localStorage', { value: localStorageApi });
+Object.defineProperty(global, 'localStorage', {
+  value: localStorageMock,
+});
