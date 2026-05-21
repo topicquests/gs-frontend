@@ -1,3 +1,8 @@
+/**
+ * Main application component.
+ * Renders the overall layout with navigation tabs and tab content.
+ * Uses localStorage to persist ideas across sessions.
+ */
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Share2, Award } from 'lucide-react';

@@ -45,7 +45,7 @@
 - [ ] Add dark mode toggle
 - [ ] Enhance graph interactivity (zooming, panning, clicking nodes)
 - [ ] Accessibility audit
-- [ ] Include unit tests for UI components and services
+- [x] Include unit tests for UI components and services
 - [ ] Document new env vars and UI changes in README
 - [ ] Clean up unused imports & dead code (Ref: `bundle-barrel-imports`)
 
@@ -61,3 +61,13 @@
   - Connect to server on mount
   - Emit `llm_request` with the prompt, await `llm_response`
 - [ ] Update frontend to use new `llmService` and wait for completion
+
+### Unit Tests
+- [x] App.tsx - Test tab switching, renders correctly
+- [x] components/TabButton.tsx - Test active/inactive states, click handler
+- [x] components/IdeateTab.tsx - Test AI interaction, loading states, error handling
+- [x] components/ArgdownRenderer.tsx - Test argdown rendering
+- [x] hooks/useLocalStorage.ts - Test read/write operations
+- [x] hooks/useAI.ts - Test ideate/submit functionality
+- [x] services/llmService.ts - Test prompt generation (mocked API)
+- [x] lib/utils.ts - Test clsxMerge function
