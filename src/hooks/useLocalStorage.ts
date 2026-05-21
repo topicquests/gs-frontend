@@ -10,7 +10,10 @@ import { useState } from 'react';
  * @param initialValue - The default value if no value exists
  * @returns A tuple of [value, setValue] similar to useState
  */
-export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
+export function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
@@ -24,10 +27,11 @@ export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T)
   /**
    * Updates both React state and localStorage.
    */
-  const setValue = (value: T) => {
+  const setValue: React.Dispatch<React.SetStateAction<T>> = (value) => {
     try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      setStoredValue(valueToStore);
+      window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
       console.error(`Error setting localStorage key "${key}":`, error);
     }
