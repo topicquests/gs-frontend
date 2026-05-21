@@ -1,7 +1,14 @@
+/**
+ * useAI hook for managing AI interactions.
+ * Handles Socratic reasoning generation and Argdown conversion.
+ */
 import { useState } from 'react';
 import { ideateReasoning, generateArgdown } from '../services/llmService.js';
 import { Idea } from '../types.ts';
 
+/**
+ * Extracts error message from unknown error type.
+ */
 function getErrorMessage(e: unknown): string {
   const message = typeof e === 'string' ? e : (e as Error).message;
   return message || 'An unexpected error occurred';
@@ -13,6 +20,10 @@ export function useAI() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Generates Socratic reasoning and Argdown from user input.
+   * Updates loading state and handles errors.
+   */
   const ideate = async (question: string, inputText: string): Promise<void> => {
     if (!inputText.trim()) return;
 
@@ -38,6 +49,10 @@ export function useAI() {
     }
   };
 
+  /**
+   * Submits a new idea to the ideas list.
+   * Creates a new Idea object with UUID and timestamp.
+   */
   const submitIdea = (
     inputText: string,
     currentReasoning: string,
@@ -48,7 +63,6 @@ export function useAI() {
 
     console.log('User clicked Submit button');
     console.log('Submitting idea:', inputText.substring(0, 100) + '.');
-
     const newIdea: Idea = {
       id: crypto.randomUUID(),
       text: inputText,

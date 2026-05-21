@@ -1,3 +1,8 @@
+/**
+ * ArgdownRenderer component.
+ * Renders argdown syntax into HTML for discourse graph visualization.
+ * Includes sanitization and syntax validation for security and error handling.
+ */
 import React, { useMemo } from 'react';
 import { argdown } from '@argdown/core';
 
@@ -5,10 +10,17 @@ interface Props {
   text: string;
 }
 
+/**
+ * Removes script tags from HTML to prevent XSS attacks.
+ */
 function sanitizeHtml(html: string): string {
   return html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 }
 
+/**
+ * Validates argdown syntax by checking bracket matching.
+ * Returns validation result with any errors found.
+ */
 function validateArgdownSyntax(text: string): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 

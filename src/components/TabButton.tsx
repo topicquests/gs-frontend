@@ -1,3 +1,8 @@
+/**
+ * TabButton component.
+ * Navigation button for switching between tabs.
+ * Shows active state with indigo border and text.
+ */
 import { clsxMerge } from '../lib/utils.ts';
 
 interface TabButtonProps {

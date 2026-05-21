@@ -1,3 +1,12 @@
+/**
+ * Prompt templates for LLM interactions.
+ * Contains prompts for Socratic reasoning and Argdown generation.
+ */
+
+/**
+ * Generates prompt for Socratic reasoning.
+ * Asks the LLM to provide challenging questions and citations.
+ */
 export const IDEATE_REASONING_PROMPT = (question: string, userIdea: string): string => `
 Question: ${question}
 User Idea: ${userIdea}
@@ -8,6 +17,10 @@ Format your response as a list of bullet points starting with "- ".
 At the end, include 1 or 2 citations from relevant hypothetical or real research in the format [1] Title: URL.
 `;
 
+/**
+ * Generates prompt for Argdown conversion.
+ * Converts reasoning into graph-ready argdown syntax.
+ */
 export const GENERATE_ARGWDOWN_PROMPT = (
   question: string,
   userIdea: string,

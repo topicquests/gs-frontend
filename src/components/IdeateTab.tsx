@@ -1,3 +1,8 @@
+/**
+ * IdeateTab component.
+ * Main interface for Socratic reasoning - accepts user input, displays generated reasoning,
+ * and shows the discourse graph visualization.
+ */
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Zap, Plus, Info, ChevronRight } from 'lucide-react';
@@ -20,10 +25,18 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
     console.log('IdeateTab component initialized');
   }, []);
 
+  /**
+   * Handles the Ideate button click.
+   * Triggers Socratic reasoning generation.
+   */
   const handleIdeate = async () => {
     await ideate(question, inputText);
   };
 
+  /**
+   * Handles the Submit button click.
+   * Saves the current idea to the ideas list.
+   */
   const handleSubmit = () => {
     submitIdea(inputText, reasoning, ideas, setIdeas);
     setInputText('');
@@ -181,7 +194,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                 <div className="flex-grow h-4 bg-slate-200 rounded"></div>
               </div>
               <div className="flex gap-4 items-center mt-4">
-                <div className="w-12 h-ly-12 bg-slate-200 rounded-full"></div>
+                <div className="w-12 h-12 bg-slate-200 rounded-full"></div>
                 <div className="flex-grow h-4 bg-slate-200 rounded"></div>
               </div>
             </div>

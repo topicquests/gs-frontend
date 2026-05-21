@@ -1,3 +1,7 @@
+/**
+ * LLM service for interacting with OpenAI-compatible APIs.
+ * Provides functions for Socratic reasoning and Argdown generation.
+ */
 import OpenAI from 'openai';
 import { IDEATE_REASONING_PROMPT, GENERATE_ARGWDOWN_PROMPT } from '../prompts.js';
 
@@ -9,6 +13,9 @@ const client = new OpenAI({
   dangerouslyAllowBrowser: true,
 });
 
+/**
+ * Logs LLM request details for debugging.
+ */
 function logRequest(endpoint: string, messages: Array<{ role: string; content: string }>) {
   console.log(
     `[LLM Request] ${endpoint}`,
@@ -26,13 +33,15 @@ function logRequest(endpoint: string, messages: Array<{ role: string; content: s
   );
 }
 
+/**
+ * Logs LLM response details for debugging.
+ */
 function logResponse(endpoint: string, content: string) {
   console.log(
     `[LLM Response] ${endpoint}`,
     JSON.stringify(
       {
-        content: content.substring(0, 200) + (content.length > 200 ? '...' : ''),
-        length: content.length,
+        content: content.substring(0, 200) + (content.length > 200 ? '. ..' : ''),
       },
       null,
       2
@@ -40,6 +49,10 @@ function logResponse(endpoint: string, content: string) {
   );
 }
 
+/**
+ * Generates Socratic reasoning questions based on a question and user idea.
+ * Returns formatted bullet points with citations.
+ */
 export async function ideateReasoning(question: string, userIdea: string): Promise<string> {
   console.log('[LLM] Starting Socratic reasoning generation');
   const prompt = IDEATE_REASONING_PROMPT(question, userIdea);
@@ -61,6 +74,9 @@ export async function ideateReasoning(question: string, userIdea: string): Promi
   }
 }
 
+/**
+ * Converts question, idea, and reasoning into Argdown format for graph visualization.
+ */
 export async function generateArgdown(
   question: string,
   userIdea: string,
