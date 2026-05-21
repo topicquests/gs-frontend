@@ -31,7 +31,20 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
    * Handles the Ideate button click.
    * Triggers Socratic reasoning generation.
    */
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      if (e.ctrlKey && e.shiftKey) {
+        e.preventDefault();
+        handleSubmit();
+      } else if (e.ctrlKey) {
+        e.preventDefault();
+        handleIdeate();
+      }
+    }
+  };
+
   const handleIdeate = async () => {
+    if (!inputText.trim() || isLoading) return;
     await ideate(question, inputText);
   };
 
@@ -40,6 +53,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
    * Saves the current idea to the ideas list.
    */
   const handleSubmit = () => {
+    if (!inputText.trim()) return;
     submitIdea(inputText, reasoning, ideas, setIdeas);
     setInputText('');
   };
@@ -148,6 +162,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
             placeholder="Share your perspective here..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <div className="flex justify-end space-x-3">
             <button
