@@ -17,8 +17,6 @@ Once satisfied, participants submit their write-up to the collective discourse. 
 ## Architecture
 
 ```mermaid
-defaults
-  fontsize: 14
 flowchart TD
   User([User Input])
   Editor([Ideation Panel])
