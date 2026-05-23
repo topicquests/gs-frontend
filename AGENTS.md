@@ -13,5 +13,5 @@
 
 ## Testing
 
-- To ensure code quality, run `npm run format`, `npm run typecheck`, and `npm run lint` after every task.
-- Always add or update unit tests for any new features or fixes.
+- To ensure code quality, run `npm run format`, `npm run typecheck`, `npm run lint`, and `npm run build` after every task.
+- Always add or update unit tests for any new features or fixes. Run `npm run test` at the end of task run.

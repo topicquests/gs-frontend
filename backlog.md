@@ -19,6 +19,16 @@
 - [x] Added unit tests for all components and services
 - [x] Added comments to all TypeScript files
 
+#### Tailwind CSS Migration (High Priority)
+- [ ] Update dark variant syntax in src/index.css: @custom-variant dark → @variant dark
+- [ ] Create tailwind.config.js with semantic color definitions and font family extensions
+- [ ] Add @config directive in src/index.css to import the config file
+- [ ] Review and update all Tailwind v4 configuration options
+- [ ] Test dark mode implementation after updates
+- [ ] Verify responsive design across all breakpoints
+- [ ] Perform build and lint checks to ensure compatibility
+- [ ] Document the new Tailwind configuration and usage patterns
+
 ### Phase 2: Feature Expansion (Medium Priority)
 - [x] The admin notice area shows hardcoded "12 Online" - should come from state
 - [x] TabButton component can be extracted to its own file
@@ -33,6 +43,7 @@
 - [ ] Add keyboard shortcuts
 - [ ] Improve grammatical placeholder text
 - [ ] Make graph responsive for mobile
+- [ ] [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
 
 ### Phase 3: Polish & Quality (Low Priority)
 - [x] Fix inconsistent indentation in `IdeateTab.tsx`
