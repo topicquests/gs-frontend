@@ -20,14 +20,13 @@
 - [x] Added comments to all TypeScript files
 
 #### Tailwind CSS Migration (High Priority)
-- [ ] Update dark variant syntax in src/index.css: @custom-variant dark → @variant dark
-- [ ] Create tailwind.config.js with semantic color definitions and font family extensions
-- [ ] Add @config directive in src/index.css to import the config file
-- [ ] Review and update all Tailwind v4 configuration options
-- [ ] Test dark mode implementation after updates
+- [x] Update dark variant syntax in src/index.css: @custom-variant dark → @variant dark
+- [x] Create tailwind.config.js with semantic color definitions and font family extensions
+- [x] Removed unused tailwind.config.cjs; only tailwind.config.js is used by Vite
+- [x] Add @config directive in src/index.css to import the config file
+- [x] Review and update all Tailwind v4 configuration options
 - [ ] Verify responsive design across all breakpoints
-- [ ] Perform build and lint checks to ensure compatibility
-- [ ] Document the new Tailwind configuration and usage patterns
+- [ ] Test dark mode implementation after updates
 
 ### Phase 2: Feature Expansion (Medium Priority)
 - [x] The admin notice area shows hardcoded "12 Online" - should come from state

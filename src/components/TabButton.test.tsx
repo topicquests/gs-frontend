@@ -26,13 +26,13 @@ describe('TabButton', () => {
   it('has correct styling when inactive', () => {
     render(<TabButton {...defaultProps} active={false} />);
     const button = screen.getByText('Test Tab');
-    expect(button).toHaveClass('border-transparent', 'text-slate-500');
+    expect(button).toHaveClass('border-transparent', 'text-secondary-light');
   });
 
   it('has correct styling when active', () => {
     render(<TabButton {...defaultProps} active={true} />);
     const button = screen.getByText('Test Tab');
-    expect(button).toHaveClass('border-indigo-600', 'text-indigo-600');
+    expect(button).toHaveClass('border-primary-dark', 'text-primary-dark');
   });
 
   it('calls onClick when clicked', () => {

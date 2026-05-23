@@ -61,9 +61,9 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
   return (
     <div className="flex gap-6 h-full min-h-0 overflow-hidden">
       <div className="w-3/5 flex flex-col h-full gap-6">
-        <div className="flex-grow bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col overflow-hidden">
-          <div className="px-5 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+        <div className="flex-grow bg-surface-light border border-border-light rounded-2xl shadow-sm flex flex-col overflow-hidden">
+          <div className="px-5 py-3 border-b border-border-light/50 flex justify-between items-center bg-surface-light/50 dark:bg-surface-dark/50">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-secondary-light">
               Socratic Reasoning Engine
             </h3>
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -117,7 +117,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
                         return (
                           <details
                             key={i}
-                            className="group mb-6 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50"
+                            className="group mb-6 border border-slate-200 rounded-xl overflow-hidden bg-slate-50/50 dark:bg-slate-800/50"
                           >
                             <summary className="flex items-center gap-3 p-3 cursor-pointer hover:bg-slate-100 transition-colors list-none">
                               <div className="w-6 h-6 rounded bg-indigo-100 shrink-6 flex items-center justify-center text-[10px] font-bold text-indigo-600 border border-indigo-200 group-open:rotate-90 transition-transform">
@@ -158,7 +158,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
 
         <div className="shrink-0 bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
           <textarea
-            className="w-full h-24 p-4 border border-slate-200 rounded-xl bg-slate-50 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all resize-none"
+            className="w-full h-24 p-4 border border-slate-200 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all resize-none"
             placeholder="Share your perspective here..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
@@ -189,7 +189,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
       </div>
 
       <div className="w-2/5 flex flex-col h-full bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden min-h-0">
-        <div className="px-5 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <div className="px-5 py-3 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
             Personal Discourse Graph
           </h3>
@@ -197,7 +197,7 @@ export default function IdeateTab({ question, ideas, setIdeas }: Props) {
             Expand View
           </button>
         </div>
-        <div className="flex-grow relative bg-slate-50/30 overflow-hidden">
+        <div className="flex-grow relative bg-slate-50/30 dark:bg-slate-800/50 overflow-hidden">
           {isLoading ? (
             <div className="p-6 space-y-4 animate-pulse">
               <div className="h-4 bg-slate-200 rounded w-3/4 mb-2"></div>
